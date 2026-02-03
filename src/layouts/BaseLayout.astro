@@ -26,14 +26,6 @@ const { title, description = 'Norfolk Power Platform User Group - Connect, Learn
     <meta property="og:type" content="website" />
 
     <title>{title} | Norfolk Power Platform User Group</title>
-
-    <!-- Dark mode script - runs before page renders to prevent flash -->
-    <script is:inline>
-      if (localStorage.getItem('theme') === 'dark' ||
-          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      }
-    </script>
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />

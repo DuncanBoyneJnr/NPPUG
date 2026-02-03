@@ -20,14 +20,6 @@
   --color-background-alt: #F5F5F5;
   --color-border: #E1E1E1;
 
-  /* Dark mode colors */
-  --color-dark-bg: #1a1a2e;
-  --color-dark-bg-alt: #16213e;
-  --color-dark-surface: #0f3460;
-  --color-dark-text: #e8e8e8;
-  --color-dark-text-light: #a0a0a0;
-  --color-dark-border: #2a2a4a;
-
   /* Power Platform product colors */
   --color-power-apps: #742774;
   --color-power-automate: #0066FF;
@@ -45,10 +37,4 @@ body {
   font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
   color: var(--color-text);
   background-color: var(--color-background);
-}
-
-/* Dark mode base styles */
-html.dark body {
-  color: var(--color-dark-text);
-  background-color: var(--color-dark-bg);
 }
