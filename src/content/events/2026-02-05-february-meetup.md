@@ -1,40 +1,49 @@
----
-title: February 2026 Meetup
-date: 2026-02-05T18:15:00
-endDate: 2026-02-05T20:45:00
-location: Norwich, Norfolk
-venue: Townshend House, 30 Crown Rd, Norwich NR1 3DT
-description: Join us for our February meetup featuring talks on Agentic AI, Higher Education community building, and SQL Server integration with Power Apps. Free pizza and networking included!
-speakers:
-  - tammy-briggs
-  - simon-greenall
-  - chris-hinchcliffe
-sponsors:
-  - GTP Tech Recruitment
-isPast: false
----
-
 ## About This Event
 
-Join us at the Townshend House for an evening of learning, networking, and pizza!
+Join us at **Townshend House** for our February meetup, an evening of practical learning, community stories, and proper tech conversations – plus free pizza, obviously 🍕
 
-### Schedule
+This month we’re covering everything from **Agentic AI** and what it actually means in practice, through to **building meaningful tech communities in higher education**, and a **hands-on look at SQL Server working alongside Power Apps**. Whether you’re deep in the Power Platform already or just getting started, you’ll walk away with ideas you can use the next day.
 
-- **6:15 PM** – Doors open, networking and refreshments  
-- **6:20 PM** – Welcome and introductions  
-- **6:25 PM** – Tammy Briggs: Agentic AI  
-- **7:10 PM** – Break with pizza  
-- **7:45 PM** – Chris Hinchcliffe: SQL Server and Power Apps  
-- **8:00 PM** – Simon Greenall: Higher Education community building  
-- **8:45 PM** – Close
+---
 
+## Schedule
 
-### What to Expect
+- **6:15 PM** – Doors open  
+  Networking, arrivals, and the important business of saying hello  
 
-Whether you're new to Power Platform or an experienced developer, this meetup has something for everyone. Our sessions cover a range of topics from cutting-edge AI to practical database integration.
+- **6:20 PM** – Welcome & introductions  
 
-### Getting There
+- **6:25 PM** – **Tammy Briggs**  
+  *Agentic AI: what it is, why it matters, and where it’s actually useful*  
 
-Townshend House is easily accessible by public transport and has nearby parking available.
+- **7:10 PM** – Pizza break 🍕  
+  Refuel, chat, and argue politely about tooling choices  
 
-We look forward to seeing you there!
+- **7:45 PM** – **Chris Hinchcliffe**  
+  *Using SQL Server alongside Power Apps without losing your sanity*  
+
+- **8:00 PM** – **Simon Greenall**  
+  *Building and sustaining tech communities in Higher Education*  
+
+- **8:45 PM** – Wrap-up & close  
+
+---
+
+## What to Expect
+
+- Short, focused talks with real-world takeaways  
+- A friendly, welcoming crowd (no egos, no gatekeeping)  
+- Time to network without awkward icebreakers  
+- Free food, good conversations, and plenty of “ohhh that’s useful” moments  
+
+You don’t need to be an expert, and you definitely don’t need to already know everyone. Just turn up curious.
+
+---
+
+## Getting There
+
+**Townshend House** is centrally located in Norwich, with good public transport links and nearby parking options. Doors open at **6:15 PM**, so feel free to arrive early and settle in.
+
+---
+
+We’d love to see you there – bring a colleague, a friend, or just yourself and an appetite 🍕
