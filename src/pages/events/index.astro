@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import EventCard from '../../components/EventCard.astro';
+import EventCalendar from '../../components/EventCalendar.astro';
+import { getCollection } from 'astro:content';
+
+const allEvents = await getCollection('events');
+const allSpeakers = await getCollection('speakers');
+const speakerMap = Object.fromEntries(allSpeakers.map(s => [s.slug, s.data.name]));
+
+const upcomingEvents = allEvents
+  .filter(event => !event.data.isPast)
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const pastEvents = allEvents
+  .filter(event => event.data.isPast)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title="Events" description="Upcoming and past events from the Norfolk Power Platform User Group.">
+  <Hero
+    title="Events"
+    subtitle="Join us for our regular meetups featuring technical demos, guest speakers, and networking."
+  />
+
+  <!-- Event Calendar & Upcoming Events -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Calendar Sidebar -->
+        <div class="lg:col-span-1">
+          <EventCalendar />
+        </div>
+
+        <!-- Upcoming Events -->
+        <div class="lg:col-span-2">
+          <h2 class="text-3xl font-bold text-text mb-8">Upcoming Events</h2>
+
+          {upcomingEvents.length > 0 ? (
+            <div class="grid md:grid-cols-2 gap-6">
+              {upcomingEvents.map((event) => (
+                <EventCard
+                  title={event.data.title}
+                  date={event.data.date}
+                  endDate={event.data.endDate}
+                  location={event.data.location}
+                  venue={event.data.venue}
+                  description={event.data.description}
+                  slug={event.slug}
+                  isPast={event.data.isPast}
+                  speakers={event.data.speakers.map(s => speakerMap[s] || s)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div class="bg-background-alt rounded-xl p-8 text-center">
+              <p class="text-text-light text-lg mb-4">No upcoming events scheduled at the moment.</p>
+              <p class="text-text-light">
+                Follow us on{' '}
+                <a
+                  href="https://www.linkedin.com/company/norfolk-power-platform-user-group/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-primary hover:underline"
+                >
+                  LinkedIn
+                </a>{' '}
+                to be notified when new events are announced.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Past Events -->
+  {pastEvents.length > 0 && (
+    <section class="py-16 bg-background-alt">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-text mb-8">Past Events</h2>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {pastEvents.map((event) => (
+            <EventCard
+              title={event.data.title}
+              date={event.data.date}
+              endDate={event.data.endDate}
+              location={event.data.location}
+              venue={event.data.venue}
+              description={event.data.description}
+              slug={event.slug}
+              isPast={event.data.isPast}
+              speakers={event.data.speakers.map(s => speakerMap[s] || s)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Want to Speak?</h2>
+      <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+        We're always looking for speakers to share their knowledge and experiences. First-time speakers welcome!
+      </p>
+      <a
+        href="https://sessionize.com/norfolk-power-platform-user-group-IP/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
+      >
+        Submit a Talk on Sessionize
+      </a>
+    </div>
+  </section>
+</BaseLayout>

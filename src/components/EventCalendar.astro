@@ -1,0 +1,100 @@
+---
+// 2026 NPPUG Event Schedule
+interface ScheduledEvent {
+  date: Date;
+  endDate?: Date;
+  title: string;
+  type: 'in-person' | 'virtual' | 'conference';
+  venue?: string;
+  url?: string;
+}
+
+const schedule2026: ScheduledEvent[] = [
+  { date: new Date(2026, 1, 5, 18, 15), title: 'NPPUG Meetup', type: 'in-person', venue: 'Townshend House' },
+  { date: new Date(2026, 2, 5, 18, 15), title: 'NPPUG Meetup', type: 'in-person', venue: 'Townshend House' },
+  // April - No event
+  { date: new Date(2026, 4, 1), endDate: new Date(2026, 4, 2), title: 'EoEPPS', type: 'conference', venue: 'Norwich', url: 'https://eoepps.co.uk' },
+  { date: new Date(2026, 5, 4, 18, 15), title: 'NPPUG Meetup', type: 'in-person', venue: 'Townshend House' },
+  { date: new Date(2026, 6, 2, 18, 15), title: 'NPPUG Meetup', type: 'in-person', venue: 'Townshend House' },
+  // August - No event
+  { date: new Date(2026, 8, 3, 18, 15), title: 'NPPUG Meetup', type: 'virtual' },
+  { date: new Date(2026, 9, 1, 18, 15), title: 'NPPUG Meetup', type: 'in-person', venue: 'Townshend House' },
+  { date: new Date(2026, 10, 5, 18, 15), title: 'NPPUG Meetup', type: 'in-person', venue: 'Townshend House' },
+  { date: new Date(2026, 11, 3, 18, 15), title: 'NPPUG Meetup', type: 'virtual' },
+];
+
+const now = new Date();
+const upcomingEvents = schedule2026.filter(event => event.date > now).slice(0, 6);
+---
+
+<div class="bg-white rounded-xl shadow-lg border border-border overflow-hidden">
+  <div class="bg-primary text-white px-6 py-4">
+    <h3 class="text-lg font-bold">2026 Event Schedule</h3>
+    <p class="text-sm text-white/80">Upcoming meetups and events</p>
+  </div>
+
+  <div class="divide-y divide-border">
+    {upcomingEvents.map((event) => {
+      const monthName = event.date.toLocaleDateString('en-GB', { month: 'long' });
+      const dayNum = event.date.getDate();
+      const year = event.date.getFullYear();
+      const isConference = event.type === 'conference';
+      const isVirtual = event.type === 'virtual';
+
+      return (
+        <div class="flex items-center px-6 py-4 hover:bg-background-alt transition-colors">
+          <div class:list={[
+            "w-14 h-14 rounded-lg flex flex-col items-center justify-center mr-4",
+            isConference ? "bg-secondary/10" : "bg-primary/10"
+          ]}>
+            <span class:list={[
+              "text-xs font-medium uppercase",
+              isConference ? "text-secondary" : "text-primary"
+            ]}>
+              {event.date.toLocaleDateString('en-GB', { month: 'short' })}
+            </span>
+            <span class:list={[
+              "text-xl font-bold",
+              isConference ? "text-secondary" : "text-primary"
+            ]}>
+              {isConference && event.endDate ? `${dayNum}-${event.endDate.getDate()}` : dayNum}
+            </span>
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-text">
+              {event.title}
+            </div>
+            <div class="text-sm text-text-light">
+              {isConference ? (
+                <span>{monthName} {year} • {event.venue}</span>
+              ) : (
+                <span>
+                  {event.date.toLocaleDateString('en-GB', { weekday: 'long' })}, {dayNum} {monthName}
+                  {' • '}
+                  {isVirtual ? '6:15 PM' : '6:15 - 8:45 PM'}
+                </span>
+              )}
+            </div>
+            <div class="mt-1">
+              {isConference ? (
+                <a href={event.url} target="_blank" rel="noopener noreferrer" class="inline-block text-xs bg-secondary text-white px-2 py-0.5 rounded-full hover:bg-secondary/90">
+                  Conference
+                </a>
+              ) : isVirtual ? (
+                <span class="inline-block text-xs bg-accent text-white px-2 py-0.5 rounded-full">Virtual</span>
+              ) : (
+                <span class="inline-block text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full">In Person</span>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="px-6 py-4 bg-background-alt text-center">
+    <p class="text-sm text-text-light">
+      In-person events held at Townshend House, Norwich
+    </p>
+  </div>
+</div>

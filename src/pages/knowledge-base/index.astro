@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+---
+
+<BaseLayout title="Knowledge Base" description="Power Platform guides, tutorials, and documentation from the Norfolk community.">
+  <Hero
+    title="Knowledge Base"
+    subtitle="Guides, tutorials, and documentation to help you master the Power Platform."
+  />
+
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="bg-background-alt rounded-xl p-12">
+          <svg class="w-16 h-16 mx-auto mb-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          <h2 class="text-2xl font-bold text-text mb-4">Coming Soon</h2>
+          <p class="text-text-light text-lg mb-6">
+            We're building a comprehensive knowledge base with guides, tutorials, and best practices for the Power Platform.
+          </p>
+          <p class="text-text-light">
+            In the meantime, check out our <a href="/resources" class="text-primary hover:underline">Resources</a> page for presentations and materials from past events.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Topics Preview -->
+  <section class="py-16 bg-background-alt">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-text mb-8 text-center">Topics We'll Cover</h2>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div class="bg-white rounded-xl p-6 shadow-lg border border-border">
+          <div class="w-12 h-12 bg-power-apps/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-power-apps" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-2">Power Apps</h3>
+          <p class="text-text-light text-sm">Canvas apps, model-driven apps, components, and best practices.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-lg border border-border">
+          <div class="w-12 h-12 bg-power-automate/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-power-automate" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 3v6h8l-8 12v-6H5l8-12z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-2">Power Automate</h3>
+          <p class="text-text-light text-sm">Cloud flows, desktop flows, triggers, actions, and automation patterns.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-lg border border-border">
+          <div class="w-12 h-12 bg-power-bi/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-power-bi" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4 5h4v14H4zM10 9h4v10h-4zM16 3h4v16h-4z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-2">Power BI</h3>
+          <p class="text-text-light text-sm">Data modeling, DAX, visualizations, and report design.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-lg border border-border">
+          <div class="w-12 h-12 bg-power-pages/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-power-pages" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4 4h16v16H4V4zm2 2v12h12V6H6z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-2">Power Pages</h3>
+          <p class="text-text-light text-sm">External-facing websites, portals, and web development.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-lg border border-border">
+          <div class="w-12 h-12 bg-copilot-studio/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-copilot-studio" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-2">Copilot Studio</h3>
+          <p class="text-text-light text-sm">Chatbots, conversational AI, and intelligent assistants.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-lg border border-border">
+          <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-2">Best Practices</h3>
+          <p class="text-text-light text-sm">Governance, ALM, security, and enterprise patterns.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contribute CTA -->
+  <section class="py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-text mb-4">Want to Contribute?</h2>
+      <p class="text-lg text-text-light mb-8 max-w-2xl mx-auto">
+        Have expertise to share? We're looking for community members to help build our knowledge base.
+      </p>
+      <a
+        href="/contact"
+        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary-dark transition-colors"
+      >
+        Get in Touch
+      </a>
+    </div>
+  </section>
+</BaseLayout>

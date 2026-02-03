@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const posts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title="Blog" description="News, updates, and insights from the Norfolk Power Platform User Group.">
+  <Hero
+    title="Blog"
+    subtitle="News, updates, and insights from our community."
+  />
+
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      {posts.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden border border-border hover:shadow-xl transition-shadow">
+              {post.data.image && (
+                <img
+                  src={post.data.image}
+                  alt={post.data.title}
+                  class="w-full h-48 object-cover"
+                />
+              )}
+              <div class="p-6">
+                <div class="flex items-center gap-4 mb-3">
+                  <time class="text-sm text-text-light" datetime={post.data.date.toISOString()}>
+                    {post.data.date.toLocaleDateString('en-GB', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </time>
+                </div>
+                <h2 class="text-xl font-bold text-text mb-3">
+                  <a href={`/blog/${post.slug}`} class="hover:text-primary transition-colors">
+                    {post.data.title}
+                  </a>
+                </h2>
+                <p class="text-text-light mb-4 line-clamp-3">
+                  {post.data.description}
+                </p>
+
+                {post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    {post.data.tags.slice(0, 3).map((tag) => (
+                      <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <a
+                  href={`/blog/${post.slug}`}
+                  class="inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors"
+                >
+                  Read More
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-text-light text-lg">No blog posts yet. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

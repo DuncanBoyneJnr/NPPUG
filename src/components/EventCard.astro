@@ -1,0 +1,104 @@
+---
+interface Props {
+  title: string;
+  date: Date;
+  endDate?: Date;
+  location: string;
+  venue: string;
+  description: string;
+  slug: string;
+  isPast?: boolean;
+  speakers?: string[];
+}
+
+const { title, date, endDate, location, venue, description, slug, isPast = false, speakers = [] } = Astro.props;
+
+// Check if this is a multi-day event
+const isMultiDay = endDate && date.toDateString() !== endDate.toDateString();
+
+const formattedDate = isMultiDay
+  ? `${date.getUTCDate()}${getOrdinalSuffix(date.getUTCDate())} - ${endDate.getUTCDate()}${getOrdinalSuffix(endDate.getUTCDate())} ${date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' })}`
+  : date.toLocaleDateString('en-GB', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'UTC',
+    });
+
+function getOrdinalSuffix(day: number): string {
+  if (day > 3 && day < 21) return 'th';
+  switch (day % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+}
+
+// Format time range for single-day events (use UTC to match stored times)
+const startTime = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+const endTime = endDate ? endDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }) : null;
+const formattedTime = isMultiDay ? null : (endTime ? `${startTime} - ${endTime}` : startTime);
+---
+
+<article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow border border-border">
+  <div class:list={['h-2', isPast ? 'bg-gray-400' : 'bg-primary']} />
+  <div class="p-6">
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        {isPast ? (
+          <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full mb-2">
+            Past Event
+          </span>
+        ) : (
+          <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm rounded-full mb-2">
+            Upcoming
+          </span>
+        )}
+        <h3 class="text-xl font-bold text-text">
+          <a href={`/events/${slug}`} class="hover:text-primary transition-colors">
+            {title}
+          </a>
+        </h3>
+      </div>
+    </div>
+
+    <div class="space-y-2 text-text-light mb-4">
+      <div class="flex items-center">
+        <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span>{formattedDate}{formattedTime && ` at ${formattedTime}`}</span>
+      </div>
+      <div class="flex items-center">
+        <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>{venue}, {location}</span>
+      </div>
+    </div>
+
+    <p class="text-text-light mb-4 line-clamp-2">
+      {description}
+    </p>
+
+    {speakers.length > 0 && (
+      <div class="mb-4">
+        <span class="text-sm font-semibold text-text">Speakers: </span>
+        <span class="text-sm text-text-light">{speakers.join(', ')}</span>
+      </div>
+    )}
+
+    <a
+      href={`/events/${slug}`}
+      class="inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors"
+    >
+      View Details
+      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</article>

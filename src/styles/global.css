@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* Norfolk Power Platform User Group - Custom Theme */
+@theme {
+  /* Power Platform inspired colors */
+  --color-primary: #742774;
+  --color-primary-light: #8e3a8e;
+  --color-primary-dark: #5a1d5a;
+
+  --color-secondary: #0078D4;
+  --color-secondary-light: #1a8fe8;
+  --color-secondary-dark: #005a9e;
+
+  --color-accent: #00A4EF;
+
+  /* Neutral colors */
+  --color-text: #323130;
+  --color-text-light: #605E5C;
+  --color-background: #FFFFFF;
+  --color-background-alt: #F5F5F5;
+  --color-border: #E1E1E1;
+
+  /* Dark mode colors */
+  --color-dark-bg: #1a1a2e;
+  --color-dark-bg-alt: #16213e;
+  --color-dark-surface: #0f3460;
+  --color-dark-text: #e8e8e8;
+  --color-dark-text-light: #a0a0a0;
+  --color-dark-border: #2a2a4a;
+
+  /* Power Platform product colors */
+  --color-power-apps: #742774;
+  --color-power-automate: #0066FF;
+  --color-power-bi: #F2C811;
+  --color-power-pages: #00B7C3;
+  --color-copilot-studio: #7719AA;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+/* Dark mode base styles */
+html.dark body {
+  color: var(--color-dark-text);
+  background-color: var(--color-dark-bg);
+}

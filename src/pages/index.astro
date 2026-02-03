@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import EventCard from '../components/EventCard.astro';
+import { getCollection } from 'astro:content';
+
+const allEvents = await getCollection('events');
+const upcomingEvents = allEvents
+  .filter(event => !event.data.isPast)
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .slice(0, 3);
+
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const allSpeakers = await getCollection('speakers');
+const speakerMap = Object.fromEntries(allSpeakers.map(s => [s.slug, s.data.name]));
+---
+
+<BaseLayout title="Home">
+  <Hero
+    title="Norfolk Power Platform User Group"
+    subtitle="Connect, learn, share, and grow together. A community for Microsoft Power Platform enthusiasts across Norwich and Norfolk."
+    showCta={true}
+    ctaText="Join Our Next Event"
+    ctaLink="/events"
+    secondaryCta="Learn More"
+    secondaryCtaLink="/about"
+  />
+
+  <!-- Upcoming Events Section -->
+  <section class="py-16 bg-background-alt dark:bg-dark-bg-alt">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-text dark:text-dark-text mb-4">Upcoming Events</h2>
+        <p class="text-text-light dark:text-dark-text-light text-lg max-w-2xl mx-auto">
+          Join us for our regular meetups featuring technical demos, guest speakers, and networking opportunities.
+        </p>
+      </div>
+
+      {upcomingEvents.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {upcomingEvents.map((event) => (
+            <EventCard
+              title={event.data.title}
+              date={event.data.date}
+              endDate={event.data.endDate}
+              location={event.data.location}
+              venue={event.data.venue}
+              description={event.data.description}
+              slug={event.slug}
+              isPast={event.data.isPast}
+              speakers={event.data.speakers.map(s => speakerMap[s] || s)}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-text-light dark:text-dark-text-light">No upcoming events scheduled. Check back soon!</p>
+      )}
+
+      <div class="text-center">
+        <a href="/events" class="inline-block bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors">
+          View All Events
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Cover Section -->
+  <section class="py-16 dark:bg-dark-bg">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-text dark:text-dark-text mb-4">What We Cover</h2>
+        <p class="text-text-light dark:text-dark-text-light text-lg max-w-2xl mx-auto">
+          Our community explores the full Microsoft Power Platform ecosystem and beyond.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-power-apps/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-power-apps" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Power Apps</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Build custom apps</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-power-automate/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-power-automate" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 3v6h8l-8 12v-6H5l8-12z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Power Automate</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Automate workflows</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-power-bi/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-power-bi" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4 5h4v14H4zM10 9h4v10h-4zM16 3h4v16h-4z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Power BI</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Data insights</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-power-pages/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-power-pages" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4 4h16v16H4V4zm2 2v12h12V6H6z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Power Pages</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">External websites</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-copilot-studio/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-copilot-studio" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Copilot Studio</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Intelligent chatbots</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-secondary/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-4H6v-2h4V7h2v4h4v2h-4v4z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Dynamics 365</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Business applications</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Dataverse</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Data platform</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Soft Skills</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Communication & teamwork</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-secondary/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">Career Advice</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">Growth & development</p>
+        </div>
+
+        <div class="bg-white dark:bg-dark-surface p-4 md:p-6 rounded-xl shadow-lg border border-border dark:border-dark-border text-center">
+          <div class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-text dark:text-dark-text mb-1 text-sm md:text-base">And More</h3>
+          <p class="text-xs md:text-sm text-text-light dark:text-dark-text-light">AI, Azure & beyond</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-16 bg-gradient-to-br from-primary/5 to-secondary/5 dark:from-primary/10 dark:to-secondary/10">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-text dark:text-dark-text mb-6">About Our Community</h2>
+        <p class="text-lg text-text-light dark:text-dark-text-light mb-8">
+          Founded in 2025, the Norfolk Power Platform User Group brings together Microsoft Power Platform
+          enthusiasts from across Norwich and Norfolk. Whether you're a beginner or an enterprise expert,
+          you'll find a welcoming community here.
+        </p>
+        <div class="grid md:grid-cols-3 gap-8 mb-8">
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">385+</div>
+            <div class="text-text-light dark:text-dark-text-light">LinkedIn Followers</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">Free</div>
+            <div class="text-text-light dark:text-dark-text-light">All Events</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">Monthly</div>
+            <div class="text-text-light dark:text-dark-text-light">Meetups</div>
+          </div>
+        </div>
+        <a href="/about" class="inline-block bg-secondary text-white px-6 py-3 rounded-lg font-semibold hover:bg-secondary-dark transition-colors">
+          Learn More About Us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Blog Posts -->
+  {recentPosts.length > 0 && (
+    <section class="py-16 dark:bg-dark-bg">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-text dark:text-dark-text mb-4">Latest Updates</h2>
+          <p class="text-text-light dark:text-dark-text-light text-lg max-w-2xl mx-auto">
+            News and insights from our community.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          {recentPosts.map((post) => (
+            <article class="bg-white dark:bg-dark-surface rounded-xl shadow-lg overflow-hidden border border-border dark:border-dark-border hover:shadow-xl transition-shadow">
+              <div class="p-6">
+                <time class="text-sm text-text-light dark:text-dark-text-light" datetime={post.data.date.toISOString()}>
+                  {post.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
+                <h3 class="text-xl font-bold text-text dark:text-dark-text mt-2 mb-3">
+                  <a href={`/blog/${post.slug}`} class="hover:text-primary transition-colors">
+                    {post.data.title}
+                  </a>
+                </h3>
+                <p class="text-text-light dark:text-dark-text-light line-clamp-3">{post.data.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="text-center">
+          <a href="/blog" class="inline-block border-2 border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors">
+            View All Posts
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Join?</h2>
+      <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+        Connect with Power Platform enthusiasts in your area. Our events are free and open to all skill levels.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="https://www.linkedin.com/company/norfolk-power-platform-user-group/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
+        >
+          Follow on LinkedIn
+        </a>
+        <a
+          href="/contact"
+          class="inline-block border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-colors"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

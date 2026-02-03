@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const allSpeakers = await getCollection('speakers');
+const author = allSpeakers.find(s => s.slug === post.data.author);
+
+const formattedDate = post.data.date.toLocaleDateString('en-GB', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <!-- Header -->
+    <header class="bg-gradient-to-br from-primary via-primary-dark to-secondary text-white py-16">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl">
+          {post.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-4">
+              {post.data.tags.map((tag) => (
+                <span class="px-3 py-1 bg-white/20 rounded-full text-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">{post.data.title}</h1>
+          <p class="text-xl text-white/90 mb-6">{post.data.description}</p>
+
+          <div class="flex items-center gap-4">
+            {author ? (
+              <a href={`/speakers/${author.slug}`} class="flex items-center hover:opacity-80 transition-opacity">
+                {author.data.image ? (
+                  <img
+                    src={author.data.image}
+                    alt={author.data.name}
+                    class="w-12 h-12 rounded-full object-cover mr-3"
+                  />
+                ) : (
+                  <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold mr-3">
+                    {author.data.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                )}
+                <div>
+                  <div class="font-semibold">{author.data.name}</div>
+                  <time class="text-sm text-white/70">{formattedDate}</time>
+                </div>
+              </a>
+            ) : (
+              <div>
+                <div class="font-semibold">{post.data.author}</div>
+                <time class="text-sm text-white/70">{formattedDate}</time>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 py-12">
+      <div class="max-w-3xl mx-auto">
+        <div class="prose prose-lg max-w-none">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Back Link -->
+  <div class="container mx-auto px-4 pb-12">
+    <a href="/blog" class="inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to Blog
+    </a>
+  </div>
+</BaseLayout>

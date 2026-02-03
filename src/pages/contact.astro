@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+---
+
+<BaseLayout title="Contact" description="Get in touch with the Norfolk Power Platform User Group.">
+  <Hero
+    title="Contact Us"
+    subtitle="Get in touch with the Norfolk Power Platform User Group."
+  />
+
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Contact Info -->
+        <div>
+          <h2 class="text-2xl font-bold text-text mb-6">Get in Touch</h2>
+          <p class="text-text-light mb-8">
+            Whether you want to become a speaker, sponsor an event, or just say hello, we'd love to hear from you.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-text mb-1">Follow Us on LinkedIn</h3>
+                <p class="text-text-light mb-2">Stay updated with our latest events and news.</p>
+                <a
+                  href="https://www.linkedin.com/company/norfolk-power-platform-user-group/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-primary hover:text-primary-dark font-medium transition-colors"
+                >
+                  linkedin.com/company/norfolk-power-platform-user-group
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-text mb-1">Location</h3>
+                <p class="text-text-light">
+                  Norwich, Norfolk, UK<br />
+                  Our events are typically held at Townshend House.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Organizers -->
+          <div class="mt-12">
+            <h3 class="text-xl font-bold text-text mb-4">Our Organizers</h3>
+            <p class="text-text-light mb-4">
+              The Norfolk Power Platform User Group is run by volunteers who are passionate about the Power Platform community.
+            </p>
+            <a href="/team" class="text-primary hover:text-primary-dark font-medium transition-colors">
+              Meet the team &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Speaker Submission -->
+        <div>
+          <div class="bg-white rounded-xl shadow-lg border border-border p-8">
+            <h2 class="text-2xl font-bold text-text mb-2">Become a Speaker</h2>
+            <p class="text-text-light mb-6">
+              We're always looking for speakers to share their knowledge and experiences. First-time speakers are especially welcome!
+            </p>
+
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-text-light">Share real-world use cases and experiences</span>
+              </div>
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-text-light">Technical deep-dives on Power Platform features</span>
+              </div>
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-text-light">Tips and tricks for citizen developers</span>
+              </div>
+              <div class="flex items-start">
+                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-text-light">Career journeys and lessons learned</span>
+              </div>
+            </div>
+
+            <div class="bg-background-alt rounded-lg p-6">
+              <h3 class="font-bold text-text mb-2">Submit Your Talk</h3>
+              <p class="text-text-light text-sm mb-4">
+                Submit your talk proposal through Sessionize. We welcome speakers of all experience levels!
+              </p>
+              <a
+                href="https://sessionize.com/norfolk-power-platform-user-group-IP/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors"
+              >
+                Submit on Sessionize
+              </a>
+            </div>
+          </div>
+
+          <!-- Sponsorship -->
+          <div class="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl p-8 mt-6">
+            <h3 class="text-xl font-bold text-text mb-2">Sponsorship Opportunities</h3>
+            <p class="text-text-light mb-4">
+              Interested in sponsoring our events? We offer various sponsorship packages to help promote your brand to the Power Platform community.
+            </p>
+            <a
+              href="/sponsors"
+              class="text-primary hover:text-primary-dark font-medium transition-colors"
+            >
+              View sponsorship options &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

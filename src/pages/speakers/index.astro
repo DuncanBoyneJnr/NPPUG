@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import SpeakerCard from '../../components/SpeakerCard.astro';
+import { getCollection } from 'astro:content';
+
+const allSpeakers = await getCollection('speakers');
+const speakers = allSpeakers.filter(s => !s.data.isOrganizer);
+---
+
+<BaseLayout title="Speakers" description="Meet the speakers who present at Norfolk Power Platform User Group events.">
+  <Hero
+    title="Our Speakers"
+    subtitle="Meet the talented individuals who share their knowledge at our events."
+  />
+
+  <!-- Speakers -->
+  {speakers.length > 0 ? (
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {speakers.map((speaker) => (
+            <SpeakerCard
+              name={speaker.data.name}
+              title={speaker.data.title}
+              company={speaker.data.company}
+              bio={speaker.data.bio}
+              slug={speaker.slug}
+              image={speaker.data.image}
+              linkedin={speaker.data.linkedin}
+              twitter={speaker.data.twitter}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="py-16">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-text-light text-lg mb-8">Speaker profiles coming soon! Check back after our upcoming events.</p>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Become a Speaker</h2>
+      <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+        We welcome speakers of all experience levels. Whether it's your first time presenting or you're a seasoned pro, we'd love to hear from you.
+      </p>
+      <a
+        href="/contact"
+        class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
+      >
+        Submit a Talk Proposal
+      </a>
+    </div>
+  </section>
+</BaseLayout>

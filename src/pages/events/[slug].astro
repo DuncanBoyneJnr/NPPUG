@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map((event) => ({
+    params: { slug: event.slug },
+    props: { event },
+  }));
+}
+
+const { event } = Astro.props;
+const { Content } = await event.render();
+
+const allSpeakers = await getCollection('speakers');
+const eventSpeakers = allSpeakers.filter(s => event.data.speakers.includes(s.slug));
+
+const formattedDate = event.data.date.toLocaleDateString('en-GB', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const formattedTime = event.data.date.toLocaleTimeString('en-GB', {
+  hour: '2-digit',
+  minute: '2-digit',
+});
+
+const endTime = event.data.endDate?.toLocaleTimeString('en-GB', {
+  hour: '2-digit',
+  minute: '2-digit',
+});
+---
+
+<BaseLayout title={event.data.title} description={event.data.description}>
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-primary via-primary-dark to-secondary text-white py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl">
+        {event.data.isPast ? (
+          <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-4">
+            Past Event
+          </span>
+        ) : (
+          <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-4">
+            Upcoming Event
+          </span>
+        )}
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">{event.data.title}</h1>
+
+        <div class="flex flex-wrap gap-6 text-white/90">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span>{formattedDate}</span>
+          </div>
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{formattedTime}{endTime && ` - ${endTime}`}</span>
+          </div>
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>{event.data.venue}, {event.data.location}</span>
+          </div>
+        </div>
+
+        {!event.data.isPast && event.data.registrationUrl && (
+          <div class="mt-8">
+            <a
+              href={event.data.registrationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
+            >
+              Register Now
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid lg:grid-cols-3 gap-12">
+      <!-- Main Content -->
+      <div class="lg:col-span-2">
+        <div class="prose prose-lg max-w-none">
+          <Content />
+        </div>
+
+        <!-- YouTube Videos -->
+        {event.data.youtubeVideos.length > 0 && (
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold text-text mb-6">Watch the Recordings</h2>
+            <div class="space-y-6">
+              {event.data.youtubeVideos.map((video) => (
+                <div>
+                  <h3 class="text-lg font-semibold text-text mb-3">{video.title}</h3>
+                  <YouTubeEmbed videoId={video.videoId} title={video.title} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Resources -->
+        {event.data.resources.length > 0 && (
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold text-text mb-6">Resources</h2>
+            <ul class="space-y-3">
+              {event.data.resources.map((resource) => (
+                <li>
+                  <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center p-4 bg-background-alt rounded-lg hover:bg-gray-200 transition-colors"
+                  >
+                    <svg class="w-5 h-5 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span class="font-medium text-text">{resource.title}</span>
+                    <span class="ml-2 text-sm text-text-light">({resource.type})</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- Speakers -->
+        {eventSpeakers.length > 0 && (
+          <div class="bg-background-alt rounded-xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-text mb-4">Speakers</h3>
+            <div class="space-y-4">
+              {eventSpeakers.map((speaker) => (
+                <a href={`/speakers/${speaker.slug}`} class="flex items-center hover:bg-gray-200 p-2 rounded-lg transition-colors">
+                  {speaker.data.image ? (
+                    <img
+                      src={speaker.data.image}
+                      alt={speaker.data.name}
+                      class="w-12 h-12 rounded-full object-cover mr-3"
+                    />
+                  ) : (
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold mr-3">
+                      {speaker.data.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                  )}
+                  <div>
+                    <div class="font-semibold text-text">{speaker.data.name}</div>
+                    <div class="text-sm text-text-light">{speaker.data.title}</div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Sponsors -->
+        {event.data.sponsors.length > 0 && (
+          <div class="bg-background-alt rounded-xl p-6">
+            <h3 class="text-xl font-bold text-text mb-4">Sponsors</h3>
+            <ul class="space-y-2">
+              {event.data.sponsors.map((sponsor) => (
+                <li class="text-text-light">{sponsor}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <!-- Back Link -->
+  <div class="container mx-auto px-4 pb-12">
+    <a href="/events" class="inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to All Events
+    </a>
+  </div>
+</BaseLayout>

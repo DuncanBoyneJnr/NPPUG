@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import { getCollection } from 'astro:content';
+
+const allResources = await getCollection('resources');
+const resources = allResources.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const resourcesByType = {
+  presentation: resources.filter(r => r.data.type === 'presentation'),
+  video: resources.filter(r => r.data.type === 'video'),
+  article: resources.filter(r => r.data.type === 'article'),
+  guide: resources.filter(r => r.data.type === 'guide'),
+  tool: resources.filter(r => r.data.type === 'tool'),
+};
+
+const typeLabels = {
+  presentation: 'Presentations',
+  video: 'Videos',
+  article: 'Articles',
+  guide: 'Guides',
+  tool: 'Tools',
+};
+
+const typeIcons = {
+  presentation: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />',
+  video: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />',
+  article: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />',
+  guide: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />',
+  tool: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />',
+};
+---
+
+<BaseLayout title="Resources" description="Presentations, videos, guides, and tools shared by our community.">
+  <Hero
+    title="Resources"
+    subtitle="Presentations, videos, guides, and tools shared by our community."
+  />
+
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      {resources.length > 0 ? (
+        <div class="space-y-16">
+          {Object.entries(resourcesByType).map(([type, typeResources]) => (
+            typeResources.length > 0 && (
+              <div>
+                <h2 class="text-2xl font-bold text-text mb-6 flex items-center">
+                  <svg class="w-6 h-6 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={typeIcons[type]} />
+                  {typeLabels[type]}
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {typeResources.map((resource) => (
+                    <article class="bg-white rounded-xl shadow-lg overflow-hidden border border-border hover:shadow-xl transition-shadow">
+                      <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                          <span class="inline-block px-2 py-1 bg-primary/10 text-primary text-xs rounded capitalize">
+                            {resource.data.type}
+                          </span>
+                          <time class="text-sm text-text-light">
+                            {resource.data.date.toLocaleDateString('en-GB', {
+                              year: 'numeric',
+                              month: 'short',
+                            })}
+                          </time>
+                        </div>
+                        <h3 class="text-lg font-bold text-text mb-2">{resource.data.title}</h3>
+                        <p class="text-text-light text-sm mb-4 line-clamp-2">{resource.data.description}</p>
+
+                        {resource.data.tags.length > 0 && (
+                          <div class="flex flex-wrap gap-1 mb-4">
+                            {resource.data.tags.slice(0, 3).map((tag) => (
+                              <span class="px-2 py-0.5 bg-background-alt text-text-light text-xs rounded">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {(resource.data.url || resource.data.youtubeUrl) && (
+                          <a
+                            href={resource.data.url || resource.data.youtubeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors"
+                          >
+                            View Resource
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-text-light text-lg mb-4">No resources available yet.</p>
+          <p class="text-text-light">Check back after our events for presentations and recordings.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-background-alt">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-text mb-4">Have a Resource to Share?</h2>
+      <p class="text-lg text-text-light mb-8 max-w-2xl mx-auto">
+        If you've presented at one of our events or have useful Power Platform resources to share, let us know!
+      </p>
+      <a
+        href="/contact"
+        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary-dark transition-colors"
+      >
+        Get in Touch
+      </a>
+    </div>
+  </section>
+</BaseLayout>
