@@ -58,19 +58,19 @@ const endTime = event.data.endDate?.toLocaleTimeString('en-GB', {
 
         <div class="flex flex-wrap gap-6 text-white/90">
           <div class="flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <span>{formattedDate}</span>
           </div>
           <div class="flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>{formattedTime}{endTime && ` - ${endTime}`}</span>
           </div>
           <div class="flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -86,7 +86,7 @@ const endTime = event.data.endDate?.toLocaleTimeString('en-GB', {
               rel="noopener noreferrer"
               class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
             >
-              Register Now
+              Register Now<span class="sr-only"> (opens in new tab)</span>
             </a>
           </div>
         )}
@@ -130,10 +130,10 @@ const endTime = event.data.endDate?.toLocaleTimeString('en-GB', {
                     rel="noopener noreferrer"
                     class="flex items-center p-4 bg-background-alt rounded-lg hover:bg-gray-200 transition-colors"
                   >
-                    <svg class="w-5 h-5 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
-                    <span class="font-medium text-text">{resource.title}</span>
+                    <span class="font-medium text-text">{resource.title}<span class="sr-only"> (opens in new tab)</span></span>
                     <span class="ml-2 text-sm text-text-light">({resource.type})</span>
                   </a>
                 </li>
@@ -191,7 +191,7 @@ const endTime = event.data.endDate?.toLocaleTimeString('en-GB', {
   <!-- Back Link -->
   <div class="container mx-auto px-4 pb-12">
     <a href="/events" class="inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors">
-      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
       Back to All Events
