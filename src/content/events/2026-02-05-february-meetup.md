@@ -6,6 +6,8 @@ location: Norwich, Norfolk
 venue: Townshend House, 30 Crown Rd, Norwich NR1 3DT
 description: Join us for our February meetup featuring talks on Agentic AI, SQL Server with Power Apps, and building tech communities in Higher Education. Free pizza included!
 speakers:
+  - tammy-briggs
+  - chris-hinchcliffe
   - simon-greenall
 isPast: false
 resources:
