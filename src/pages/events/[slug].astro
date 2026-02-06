@@ -14,6 +14,11 @@ export async function getStaticPaths() {
 const { event } = Astro.props;
 const { Content } = await event.render();
 
+// Calculate if event is past based on the event date
+const now = new Date();
+const eventEnd = event.data.endDate || event.data.date;
+const isPast = eventEnd < now;
+
 const allSpeakers = await getCollection('speakers');
 const eventSpeakers = allSpeakers.filter(s => event.data.speakers.includes(s.slug));
 
@@ -40,7 +45,7 @@ const endTime = event.data.endDate?.toLocaleTimeString('en-GB', {
   <section class="bg-gradient-to-br from-primary via-primary-dark to-secondary text-white py-16">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl">
-        {event.data.isPast ? (
+        {isPast ? (
           <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-4">
             Past Event
           </span>
@@ -73,7 +78,7 @@ const endTime = event.data.endDate?.toLocaleTimeString('en-GB', {
           </div>
         </div>
 
-        {!event.data.isPast && event.data.registrationUrl && (
+        {!isPast && event.data.registrationUrl && (
           <div class="mt-8">
             <a
               href={event.data.registrationUrl}

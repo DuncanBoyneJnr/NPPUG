@@ -9,12 +9,19 @@ const allEvents = await getCollection('events');
 const allSpeakers = await getCollection('speakers');
 const speakerMap = Object.fromEntries(allSpeakers.map(s => [s.slug, s.data.name]));
 
+// Calculate if event is past based on the event date (use endDate if available, otherwise date)
+const now = new Date();
+const isEventPast = (event: typeof allEvents[0]) => {
+  const eventEnd = event.data.endDate || event.data.date;
+  return eventEnd < now;
+};
+
 const upcomingEvents = allEvents
-  .filter(event => !event.data.isPast)
+  .filter(event => !isEventPast(event))
   .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 
 const pastEvents = allEvents
-  .filter(event => event.data.isPast)
+  .filter(event => isEventPast(event))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
@@ -48,7 +55,7 @@ const pastEvents = allEvents
                   venue={event.data.venue}
                   description={event.data.description}
                   slug={event.slug}
-                  isPast={event.data.isPast}
+                  isPast={false}
                   speakers={event.data.speakers.map(s => speakerMap[s] || s)}
                 />
               ))}
@@ -91,7 +98,7 @@ const pastEvents = allEvents
               venue={event.data.venue}
               description={event.data.description}
               slug={event.slug}
-              isPast={event.data.isPast}
+              isPast={true}
               speakers={event.data.speakers.map(s => speakerMap[s] || s)}
             />
           ))}
