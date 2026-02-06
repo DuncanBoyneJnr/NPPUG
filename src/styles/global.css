@@ -2,16 +2,16 @@
 
 /* Norfolk Power Platform User Group - Custom Theme */
 @theme {
-  /* Royal blue with warm complementary colors */
-  --color-primary: #2563EB;
-  --color-primary-light: #3B82F6;
-  --color-primary-dark: #1D4ED8;
+  /* Purple primary with warm complementary colors */
+  --color-primary: #7C3AED;
+  --color-primary-light: #8B5CF6;
+  --color-primary-dark: #6D28D9;
 
   --color-secondary: #F59E0B;
   --color-secondary-light: #FBBF24;
   --color-secondary-dark: #D97706;
 
-  --color-accent: #FF7F50;
+  --color-accent: #2563EB;
 
   /* Neutral colors */
   --color-text: #323130;
