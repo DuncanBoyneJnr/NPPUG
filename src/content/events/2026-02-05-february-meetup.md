@@ -5,8 +5,13 @@ endDate: 2026-02-05T20:45:00
 location: Norwich, Norfolk
 venue: Townshend House, 30 Crown Rd, Norwich NR1 3DT
 description: Join us for our February meetup featuring talks on Agentic AI, SQL Server with Power Apps, and building tech communities in Higher Education. Free pizza included!
-speakers: []
+speakers:
+  - simon-greenall
 isPast: false
+resources:
+  - title: "From Chaos to Community: Building a Makers Journey in Higher Education - Simon Greenall"
+    url: "/documents/Presentations/From Chaos to Community-Building a Makers Journey in Higher Education - nppug.pdf"
+    type: slides
 ---
 
 ## About This Event

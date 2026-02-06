@@ -123,6 +123,34 @@ const initials = speaker.data.name.split(' ').map(n => n[0]).join('').toUpperCas
 
       <!-- Sidebar -->
       <div class="lg:col-span-1">
+        {speaker.data.presentations.length > 0 && (
+          <div class="bg-background-alt rounded-xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-text mb-4">Presentations</h3>
+            <ul class="space-y-3">
+              {speaker.data.presentations.map((presentation) => (
+                <li>
+                  <a
+                    href={presentation.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center p-3 hover:bg-gray-200 rounded-lg transition-colors -mx-3"
+                  >
+                    <svg class="w-5 h-5 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <div>
+                      <div class="font-medium text-text">{presentation.title}</div>
+                      {presentation.event && (
+                        <div class="text-sm text-text-light">{presentation.event}</div>
+                      )}
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {speakerEvents.length > 0 && (
           <div class="bg-background-alt rounded-xl p-6">
             <h3 class="text-xl font-bold text-text mb-4">Events</h3>

@@ -39,6 +39,12 @@ const speakersCollection = defineCollection({
     github: z.string().optional(),
     website: z.string().optional(),
     isOrganizer: z.boolean().default(false),
+    presentations: z.array(z.object({
+      title: z.string(),
+      url: z.string(),
+      event: z.string().optional(),
+      date: z.coerce.date().optional(),
+    })).default([]),
   }),
 });
 
