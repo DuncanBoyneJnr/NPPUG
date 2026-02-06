@@ -20,7 +20,14 @@ const navLinks = [
       { href: '/knowledge-base', label: 'Knowledge Base' },
     ]
   },
-  { href: '/sponsors', label: 'Sponsors' },
+  {
+    label: 'Sponsors',
+    href: '/sponsors',
+    children: [
+      { href: '/sponsors', label: 'Our Sponsors' },
+      { href: '/sponsorship', label: 'Become a Sponsor' },
+    ]
+  },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -33,7 +40,8 @@ const allLinks = [
   { href: '/resources', label: 'All Resources' },
   { href: '/blog', label: 'Blog' },
   { href: '/knowledge-base', label: 'Knowledge Base' },
-  { href: '/sponsors', label: 'Sponsors' },
+  { href: '/sponsors', label: 'Our Sponsors' },
+  { href: '/sponsorship', label: 'Become a Sponsor' },
   { href: '/contact', label: 'Contact' },
 ];
 
