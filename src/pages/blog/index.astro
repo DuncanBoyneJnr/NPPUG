@@ -59,7 +59,7 @@ const posts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTim
                   href={`/blog/${post.slug}`}
                   class="inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors"
                 >
-                  Read More
+                  Read More<span class="sr-only">: {post.data.title}</span>
                   <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
