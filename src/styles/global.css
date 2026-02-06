@@ -2,16 +2,16 @@
 
 /* Norfolk Power Platform User Group - Custom Theme */
 @theme {
-  /* Power Platform inspired colors */
-  --color-primary: #742774;
-  --color-primary-light: #8e3a8e;
-  --color-primary-dark: #5a1d5a;
+  /* Royal blue with warm complementary colors */
+  --color-primary: #2563EB;
+  --color-primary-light: #3B82F6;
+  --color-primary-dark: #1D4ED8;
 
-  --color-secondary: #0078D4;
-  --color-secondary-light: #1a8fe8;
-  --color-secondary-dark: #005a9e;
+  --color-secondary: #F59E0B;
+  --color-secondary-light: #FBBF24;
+  --color-secondary-dark: #D97706;
 
-  --color-accent: #00A4EF;
+  --color-accent: #FF7F50;
 
   /* Neutral colors */
   --color-text: #323130;

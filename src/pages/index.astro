@@ -5,8 +5,16 @@ import EventCard from '../components/EventCard.astro';
 import { getCollection } from 'astro:content';
 
 const allEvents = await getCollection('events');
+
+// Calculate if event is past based on the event date
+const now = new Date();
+const isEventPast = (event: typeof allEvents[0]) => {
+  const eventEnd = event.data.endDate || event.data.date;
+  return eventEnd < now;
+};
+
 const upcomingEvents = allEvents
-  .filter(event => !event.data.isPast)
+  .filter(event => !isEventPast(event))
   .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
   .slice(0, 3);
 
@@ -51,7 +59,7 @@ const speakerMap = Object.fromEntries(allSpeakers.map(s => [s.slug, s.data.name]
               venue={event.data.venue}
               description={event.data.description}
               slug={event.slug}
-              isPast={event.data.isPast}
+              isPast={false}
               speakers={event.data.speakers.map(s => speakerMap[s] || s)}
             />
           ))}
